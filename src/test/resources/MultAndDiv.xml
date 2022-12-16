@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="MultAndDivSuite" verbose="1" >
+    <test name="MultAndDivTests" >
+        <classes>
+            <class name="com.epam.tc.hw1.TestMult" />
+            <class name="com.epam.tc.hw1.TestDiv" />
+        </classes>
+    </test>
+</suite>
