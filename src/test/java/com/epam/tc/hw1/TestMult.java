@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 
 
 public class TestMult {
+
     @DataProvider
     public static Object[][] longData() {
         return new Object[][]{
@@ -16,10 +17,11 @@ public class TestMult {
                 {10, 15, 150}
         };
     }
+
     @DataProvider
     public static Object[][] doubleData() {
         return new Object[][]{
-                {5.7, 5.3, 11.0},
+                {5.7, 5.3, 30},
                 {5.5, 4.8, 26},
                 {4.7, 3.3, 15}
         };
@@ -32,7 +34,8 @@ public class TestMult {
         Calculator calculator = new Calculator();
         long result = calculator.mult(first, second);
 
-        assertThat(result).as("This test failed (and it is expected)").isEqualTo(third);
+        assertThat(result).as("This test is failed")
+                .isEqualTo(third);
     }
 
     @Test(dataProvider = "doubleData")
@@ -42,6 +45,7 @@ public class TestMult {
         Calculator calculator = new Calculator();
         double result = calculator.mult(first, second);
 
-        assertThat(result).as("This test failed (and it is expected)").isEqualTo(third);
+        assertThat(result).as("This test is failed")
+                .isEqualTo(third);
     }
 }

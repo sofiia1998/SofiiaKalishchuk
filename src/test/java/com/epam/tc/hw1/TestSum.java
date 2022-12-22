@@ -8,19 +8,21 @@ import org.testng.annotations.Test;
 
 
 public class TestSum {
+
     @DataProvider
     public static Object[][] longData() {
         return new Object[][]{
                 {10, 20, 30},
-                {5, 5, 5},
+                {5, 5, 10},
                 {10, 15, 25}
         };
     }
+
     @DataProvider
     public static Object[][] doubleData() {
         return new Object[][]{
                 {5.7, 5.3, 11.0},
-                {5.5, 4.8, 7},
+                {5.5, 4.8, 10.3},
                 {4.7, 3.3, 8}
         };
     }

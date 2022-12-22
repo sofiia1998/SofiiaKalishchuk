@@ -9,21 +9,23 @@ import org.testng.annotations.Test;
 
 
 public class TestDiv {
-    private static final double PRECISION = 0.000000001;
+    private static final double PRECISION = 0.0000001;
+
     @DataProvider
     public static Object[][] longData() {
         return new Object[][]{
                 {20, 10, 2},
-                {5, 5, 0},
+                {5, 5, 1},
                 {100, 25, 4}
         };
     }
+
     @DataProvider
     public static Object[][] doubleData() {
         return new Object[][]{
                 {5.7, 2, 2.85},
                 {3.3, 3, 1.1},
-                {4.7, 3.3, 1}
+                {5.6, 0.8, 7}
         };
     }
 
@@ -33,7 +35,7 @@ public class TestDiv {
         Calculator calculator = new Calculator();
         long result = calculator.div(first, second);
 
-        assertThat(result).as("This test failed (and it is expected)").isEqualTo(third);
+        assertThat(result).as("This test is failed").isEqualTo(third);
     }
 
     @Test(dataProvider = "doubleData")
@@ -42,7 +44,7 @@ public class TestDiv {
         Calculator calculator = new Calculator();
         double result = calculator.div(first, second);
 
-        assertThat(result).as("This test failed (and it is expected)")
+        assertThat(result).as("This test is failed")
                 .isCloseTo(third, Percentage.withPercentage(PRECISION));
     }
 }
