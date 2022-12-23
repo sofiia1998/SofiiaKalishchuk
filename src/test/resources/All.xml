@@ -3,10 +3,10 @@
 <suite name="AllTestSuite" verbose="1" >
     <test name="AllTests" >
         <classes>
-            <class name="com.epam.tc.hw1.TestSum" />
-            <class name="com.epam.tc.hw1.TestMult" />
-            <class name="com.epam.tc.hw1.TestSub" />
-            <class name="com.epam.tc.hw1.TestDiv" />
+            <class name="com.epam.tc.hw1.SumTest" />
+            <class name="com.epam.tc.hw1.MultTest" />
+            <class name="com.epam.tc.hw1.SubTest" />
+            <class name="com.epam.tc.hw1.DivTest" />
         </classes>
     </test>
 </suite>

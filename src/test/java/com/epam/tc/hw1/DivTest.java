@@ -1,50 +1,35 @@
 package com.epam.tc.hw1;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import com.epam.tat.module4.Calculator;
 import org.assertj.core.data.Percentage;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 
-public class TestDiv {
+public class DivTest extends  CalculatorTestBase {
     private static final double PRECISION = 0.0000001;
 
-    @DataProvider
-    public static Object[][] longData() {
-        return new Object[][]{
-                {20, 10, 2},
-                {5, 5, 1},
-                {100, 25, 4}
-        };
-    }
-
-    @DataProvider
-    public static Object[][] doubleData() {
-        return new Object[][]{
-                {5.7, 2, 2.85},
-                {3.3, 3, 1.1},
-                {5.6, 0.8, 7}
-        };
-    }
-
-    @Test(dataProvider = "longData")
+    @Test(dataProviderClass = DataProviders.class, dataProvider = "div long data")
     public void divTestLong(long first, long second, long third) {
 
-        Calculator calculator = new Calculator();
         long result = calculator.div(first, second);
 
         assertThat(result).as("This test is failed").isEqualTo(third);
     }
 
-    @Test(dataProvider = "doubleData")
+    @Test(dataProviderClass = DataProviders.class, dataProvider = "div double data")
     public void divTestDouble(double first, double second, double third) {
 
-        Calculator calculator = new Calculator();
         double result = calculator.div(first, second);
 
         assertThat(result).as("This test is failed")
                 .isCloseTo(third, Percentage.withPercentage(PRECISION));
+    }
+
+    @Test(dataProviderClass = DataProviders.class, dataProvider = "div zero data")
+    public void divTestLongZero(long first, long second, Class third) {
+        assertThatThrownBy(() -> calculator.div(first, second))
+                .isInstanceOf(third).hasMessage("Attempt to divide by zero");
     }
 }

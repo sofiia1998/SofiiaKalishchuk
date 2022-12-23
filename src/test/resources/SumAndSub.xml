@@ -3,8 +3,8 @@
 <suite name="SumAndSubSuite" verbose="1" >
     <test name="SumAndSubTests" >
         <classes>
-            <class name="com.epam.tc.hw1.TestSum" />
-            <class name="com.epam.tc.hw1.TestSub" />
+            <class name="com.epam.tc.hw1.SumTest" />
+            <class name="com.epam.tc.hw1.SubTest" />
         </classes>
     </test>
 </suite>
