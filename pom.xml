@@ -37,6 +37,12 @@
                 <suite.xml.file>MultAndDiv.xml</suite.xml.file>
             </properties>
         </profile>
+        <profile>
+            <id>Homework2</id>
+            <properties>
+                <suite.xml.file>Homework2.xml</suite.xml.file>
+            </properties>
+        </profile>
     </profiles>
 
     <repositories>
