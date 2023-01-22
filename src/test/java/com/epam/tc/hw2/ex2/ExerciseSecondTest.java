@@ -2,7 +2,6 @@ package com.epam.tc.hw2.ex2;
 
 import com.epam.tc.hw2.BrowserTestBase;
 import java.util.List;
-import java.util.Objects;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -15,7 +14,7 @@ import org.testng.annotations.Test;
 public class ExerciseSecondTest extends BrowserTestBase {
 
     @Test
-    public void testDifferentElements() throws InterruptedException {
+    public void testDifferentElements() {
         // 5. Open through the header menu Service -> Different Elements Page - Page is opened
         driver.findElement(By.className("menu-title")).click();
 
@@ -23,38 +22,39 @@ public class ExerciseSecondTest extends BrowserTestBase {
                 .until(ExpectedConditions.elementToBeClickable(By.linkText("Different elements")));
         driver.findElement(By.linkText("Different elements")).click();
         SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(driver.getTitle()).isEqualTo("Different Elements");
+        softAssertions.assertThat(driver.getTitle()).as("check the title").isEqualTo("Different Elements");
 
         // 6. Select checkboxes (Water and Wind)
-        List<WebElement> checkBoxes = driver.findElements(By.className("label-checkbox"));
+        driver.findElement(By.xpath("//*[text()[contains(., 'Water')]]")).click();
+        softAssertions.assertThat(driver.findElement(By.xpath("//*[text()[contains(., 'Water')]]"))
+                .isEnabled()).as("check the checkbox Water is checked").isTrue();
 
-        for (WebElement checkB : checkBoxes) {
-            if (Objects.equals(checkB.getText(), "Water") || Objects.equals(checkB.getText(), "Wind")) {
-                checkB.click();
-                softAssertions.assertThat(checkB.isEnabled()).isTrue();
-            }
-        }
+        driver.findElement(By.xpath("//*[text()[contains(., 'Wind')]]")).click();
+        softAssertions.assertThat(driver.findElement(By.xpath("//*[text()[contains(., 'Wind')]]"))
+                .isEnabled()).as("check the checkbox Wind is checked").isTrue();
+
         // 7. Select radio (Selen)
         driver.findElement(By.xpath("//*[text()[contains(., 'Selen')]]")).click();
         softAssertions.assertThat(driver.findElement(By.xpath("//*[text()[contains(., 'Selen')]]"))
-                .isEnabled()).isTrue();
+                .isEnabled()).as("check the radio Selen is selected").isTrue();
 
         // 8. Select in dropdown (Yellow)
         Select colours = new Select(driver.findElement(By.cssSelector("select[class='uui-form-element']")));
         colours.selectByVisibleText("Yellow");
         String option = colours.getFirstSelectedOption().getText();
-        softAssertions.assertThat(option).isEqualTo("Yellow");
+        softAssertions.assertThat(option).as("check the option Yellow is selected").isEqualTo("Yellow");
 
         // 9. Assert log rows
         List<WebElement> logs = driver.findElements(By.cssSelector("ul.panel-body-list.logs *"));
-        softAssertions.assertThat(logs.get(0).getText()).contains("changed to Yellow");
-        softAssertions.assertThat(logs.get(1).getText()).contains("changed to Selen");
-        softAssertions.assertThat(logs.get(2).getText()).contains("Wind", "true");
-        softAssertions.assertThat(logs.get(3).getText()).contains("Water", "true");
+        List<String> logsItems = List.of("changed to Yellow", "changed to Selen",
+                "Wind: condition changed to true", "Water: condition changed to true");
+        for (int i = 0; i < logs.size(); i++) {
+            softAssertions.assertThat(logs.get(i).getText()).as("check the logs are correct")
+                    .contains(logsItems.get(i));
+        }
 
         softAssertions.assertAll();
 
-        Thread.sleep(5000);
-
     }
+
 }

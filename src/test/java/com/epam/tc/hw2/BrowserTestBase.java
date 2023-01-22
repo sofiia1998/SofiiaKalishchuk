@@ -5,6 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
@@ -17,42 +18,41 @@ public class BrowserTestBase {
 
     protected WebDriver driver;
 
-    // 1. Open test site by URL
-    @BeforeClass
     public void setup() {
         ITestResult itr = Reporter.getCurrentTestResult();
         System.err.println("ClassName: " + itr.getInstance().getClass().getName());
-        driver = WebDriverManager.chromedriver().create();
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+    }
 
+    @BeforeClass
+    public void login() {
         // 1. Open test site by URL
+        setup();
         driver.navigate().to("https://jdi-testing.github.io/jdi-light/index.html");
         driver.manage().window().maximize();
 
         // 2. Assert Browser title
-        assertThat(driver.getTitle()).isEqualTo("Home Page");
+        assertThat(driver.getTitle()).as("check the title").isEqualTo("Home Page");
 
         // 3. Perform login
         new WebDriverWait(driver, 10)
-                .until(ExpectedConditions.elementToBeClickable(By
-                        .cssSelector("ul.uui-navigation.navbar-nav.navbar-right > li > a")));
+                .until(ExpectedConditions.elementToBeClickable(By.className("uui-profile-menu")));
 
-        driver.findElement(By.cssSelector("ul.uui-navigation.navbar-nav.navbar-right > li > a")).click();
+        driver.findElement(By.className("uui-profile-menu")).click();
         driver.findElement(By.id("name")).sendKeys("Roman");
         driver.findElement(By.id("password")).sendKeys("Jdi1234");
         driver.findElement(By.id("login-button")).click();
 
-        new WebDriverWait(driver, 10)
-                .until(ExpectedConditions
-                        .elementToBeClickable(By
-                                .id("user-name")));
-
         // 4. Assert Username is loggined
-        assertThat(driver.findElement(By.id("user-name")).getText()).isEqualTo("ROMAN IOVLEV");
+        assertThat(driver.findElement(By.id("user-name")).getText()).as("check the username")
+                .isEqualTo("ROMAN IOVLEV");
     }
 
     @AfterClass
     public void after() {
         // Close Browser
-        driver.close();
+        driver.quit();
     }
+
 }

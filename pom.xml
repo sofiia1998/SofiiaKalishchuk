@@ -40,7 +40,7 @@
         <profile>
             <id>Homework2</id>
             <properties>
-                <suite.xml.file>Homework2.xml</suite.xml.file>
+                <suite.xml.file>homework2.xml</suite.xml.file>
             </properties>
         </profile>
     </profiles>
