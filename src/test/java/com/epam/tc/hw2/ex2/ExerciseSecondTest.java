@@ -12,7 +12,6 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
-
 public class ExerciseSecondTest extends BrowserTestBase {
     SoftAssertions softAssertions = new SoftAssertions();
 
@@ -20,7 +19,6 @@ public class ExerciseSecondTest extends BrowserTestBase {
     public void testDifferentElements() {
         // 1. Open test site by URL
         driver.navigate().to("https://jdi-testing.github.io/jdi-light/index.html");
-        driver.manage().window().maximize();
 
         // 2. Assert Browser title
         assertThat(driver.getTitle()).as("check the title").isEqualTo("Home Page");
